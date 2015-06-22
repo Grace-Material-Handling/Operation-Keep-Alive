@@ -8,7 +8,11 @@ require 'active_support/core_ext/time/zones'
 require "nutshell-crm"
 
 #configure
-require "./config"
+# config.rb
+
+# nutshell credentials
+$username = %x( echo $USERNAME )
+$apiKey   = %x( echo $APIKEY )
 
 # start app
 require "./app.rb"
