@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'rubygems'
+
 # require nesesarry gems
 require "date"
 require "time"
