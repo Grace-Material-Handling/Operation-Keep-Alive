@@ -8,6 +8,10 @@ $nutshell = NutshellCrmAPI::Client.new($username, $apiKey)
 company_task_limit = 5
 
 
+# limit tasks that will be created
+company_task_limit = 5
+
+
 # this function takes a person as
 # an input and checks to see if
 # they need to be contacted based
