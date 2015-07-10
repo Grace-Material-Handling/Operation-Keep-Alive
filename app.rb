@@ -4,6 +4,10 @@
 $nutshell = NutshellCrm::Client.new($username, $apiKey)
 
 
+# limit tasks that will be created
+company_task_limit = 5
+
+
 # this function takes a person as
 # an input and checks to see if
 # they need to be contacted based
@@ -37,12 +41,6 @@ staff = [{
 	id: 13,
 	entityType: "Users",
 	meetingTime: next_wedsday + 13.hours
-},
-{
-	# Phil Tomasello
-  id: 4765,
-  entityType: "Contacts",
-  meetingTime: next_wedsday + 13.hours
 }]
 
 
@@ -84,24 +82,28 @@ end
 
 # assign a contact activity to
 # a staff member with a stale contacts
-stale_contacts.each do |contact| 
+loop_index = 1
+stale_contacts.each do |contact|
+
+	# limit tasks to be created
+	break if loop_index > company_task_limit
+
 	# get a company employe who will
 	# paticipate in the activity
 	staff_member = staff.sample
 
-	#schdual activity
-	$nutshell.new_activity({
-		name: "Call",
-		description: "This activity was created automatically to keep relations with this person/company from going stale.",
-		activityTypeId: 1,
-		startTime: staff_member[:meetingTime],
-		endTime: staff_member[:meetingTime] += 10.minutes,
-		participants: [
-			{
-				id: contact["id"],
-				entityType: contact["entityType"]
-			},
-			staff.sample
-		]
+	# increment task limit
+	loop_index += 1
+
+	# schdual task
+	$nutshell.new_task({
+		title: "Schdual Meeting",
+	    description: "This task was created automatically to keep relations with this person/company from going stale.",
+	    "dueTime": staff_member[:meetingTime] += 10.minutes,
+	    "assignee": staff.sample,
+	    "entity": {
+			id: contact["id"],
+			entityType: contact["entityType"]
+		}
 	})
 end
