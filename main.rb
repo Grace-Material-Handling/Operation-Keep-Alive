@@ -7,7 +7,8 @@ require "date"
 require "time"
 require 'active_support/core_ext/numeric/time'
 require 'active_support/core_ext/time/zones'
-require "nutshell-crm"
+
+require 'nutshell-crm-api'
 
 # nutshell credentials
 $username = ARGV[0]
